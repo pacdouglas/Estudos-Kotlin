@@ -23,5 +23,8 @@ data class Movimentacao(
         var descricao: String = "",
 
         @ManyToOne
-        var conta: Conta = Conta()
+        var conta: Conta = Conta(),
+
+        @ManyToMany
+        var categoria: List<Categoria> = emptyList()
 )
