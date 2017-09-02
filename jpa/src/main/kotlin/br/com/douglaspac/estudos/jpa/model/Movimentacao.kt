@@ -4,8 +4,6 @@ import java.math.BigDecimal
 import java.util.*
 import javax.persistence.*
 
-enum class TipoMovimentacao { ENTRADA, SAIDA }
-
 @Entity
 data class Movimentacao(
         @Id
@@ -17,7 +15,7 @@ data class Movimentacao(
         @Enumerated(EnumType.STRING)
         var tipo: TipoMovimentacao = TipoMovimentacao.SAIDA,
 
-        @Temporal(TemporalType.TIMESTAMP)
+        @Temporal(TemporalType.DATE)
         var data: Calendar = Calendar.getInstance(),
 
         var descricao: String = "",

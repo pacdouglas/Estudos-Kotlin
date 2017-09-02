@@ -10,7 +10,8 @@ data class Cliente(
         var nome: String = "",
         var endereco: String = "",
         var profissao: String = "",
-        @JoinColumn(unique = true)
-        @OneToOne
-        var conta: Conta = Conta()
+
+        @OneToOne(mappedBy="cliente")
+        @JoinColumn(unique=true)
+        var conta: Conta? = null
 )

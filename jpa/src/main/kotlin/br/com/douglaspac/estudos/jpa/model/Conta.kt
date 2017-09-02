@@ -1,9 +1,6 @@
 package br.com.douglaspac.estudos.jpa.model
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 data class Conta(
@@ -13,7 +10,12 @@ data class Conta(
         var titular: String = "",
         var numero: String = "",
         var banco: String = "",
-        var agencia: String) {
-    @Suppress("unused")
-    constructor() : this(agencia = "")
-}
+        var agencia: String = "",
+
+        @OneToOne
+        @JoinColumn(unique=true)
+        var cliente: Cliente? = null,
+
+        @OneToMany(mappedBy = "conta")
+        var movimentacoes: List<Movimentacao> = emptyList()
+)

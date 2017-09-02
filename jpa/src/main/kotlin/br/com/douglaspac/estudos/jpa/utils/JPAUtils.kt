@@ -4,6 +4,6 @@ import javax.persistence.Persistence
 
 class JPAUtils {
     companion object {
-        val emfFinancas = Persistence.createEntityManagerFactory("financas")
+        val emFinancas = Persistence.createEntityManagerFactory("financas").createEntityManager()
     }
 }
