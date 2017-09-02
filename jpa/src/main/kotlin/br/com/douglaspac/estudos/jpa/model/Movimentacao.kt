@@ -5,6 +5,8 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
+@NamedQuery(name = "mediaDaContaPeloTipoMovimentacao",
+        query = "select avg(m.valor) from Movimentacao m where m.conta=:pConta  and m.tipoMovimentacao = :pTipo")
 data class Movimentacao(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

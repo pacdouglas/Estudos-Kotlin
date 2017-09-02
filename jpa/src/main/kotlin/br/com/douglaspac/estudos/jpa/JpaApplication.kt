@@ -7,17 +7,37 @@ import br.com.douglaspac.estudos.jpa.model.TipoMovimentacao
 import br.com.douglaspac.estudos.jpa.utils.JPAUtils
 import java.math.BigDecimal
 import java.util.*
+import javax.persistence.TypedQuery
 
 
 fun main(args: Array<String>) {
     //testaContaCliente()
     //testeBuscaConta()
     //testeConta()
-    //testeJPQL()
-    testeJPARelacionamento()
-    //testeMovimentacaoConta()
+    //testeJPARelacionamento()
     //testeMovimentacoesComCategoria()
+    //testeJPQL()
+    //testeMovimentacaoConta()
     //testeMovimentacoesPorCategoria()
+    testeMovimentacoesPorCategoriaComJPQL()
+}
+
+fun testeMovimentacoesPorCategoriaComJPQL() {
+    val em = JPAUtils.emFinancas
+    em.transaction.begin()
+
+    val conta = Conta(id = 3)
+
+    val jpql = "select sum(m.valor) from Movimentacao m where m.conta = :pConta and m.tipo = :pTipo"
+    val query: TypedQuery<BigDecimal> = em.createQuery(jpql, BigDecimal::class.java)
+    query.setParameter("pConta", conta)
+    query.setParameter("pTipo", TipoMovimentacao.SAIDA)
+
+    val singleResult = query.singleResult
+    println("Soma deu:$singleResult")
+
+    em.transaction.commit()
+    em.close()
 }
 
 fun testaContaCliente() {
@@ -60,7 +80,7 @@ fun testeJPQL() {
     em.transaction.begin()
 
     val conta = Conta()
-    conta.id = 1
+    conta.id = 3
 
     val query = em
             .createQuery("select m from Movimentacao m where m.conta=:pConta " + "and m.tipo = :pTipo order by m.valor desc")
