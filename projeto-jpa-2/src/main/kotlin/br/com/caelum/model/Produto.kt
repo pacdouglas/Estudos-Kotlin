@@ -1,15 +1,7 @@
 package br.com.caelum.model
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.ManyToOne
+import javax.persistence.*
 import javax.validation.Valid
-import javax.validation.constraints.Min
-
-import org.hibernate.validator.constraints.NotEmpty
 
 @Entity
 data class Produto(
@@ -23,5 +15,7 @@ data class Produto(
         var preco: Double = 20.toDouble(),
         @Valid
         @ManyToOne
-        var loja: Loja = Loja()
+        var loja: Loja = Loja(),
+        @ManyToMany
+        var categorias: List<Categoria> = emptyList()
 )

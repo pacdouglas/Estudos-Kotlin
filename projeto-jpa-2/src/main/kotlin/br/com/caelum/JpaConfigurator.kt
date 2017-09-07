@@ -25,7 +25,7 @@ class JpaConfigurator {
             dataSource.setDriverClassName("com.mysql.jdbc.Driver")
             dataSource.url = "jdbc:mysql://localhost/projeto_jpa"
             dataSource.username = "root"
-            dataSource.password = ""
+            dataSource.password = "senhadomysql"
 
             return dataSource
         }
