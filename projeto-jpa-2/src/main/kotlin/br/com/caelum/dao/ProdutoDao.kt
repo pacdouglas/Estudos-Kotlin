@@ -2,7 +2,11 @@ package br.com.caelum.dao
 
 import br.com.caelum.model.Loja
 import br.com.caelum.model.Produto
+import org.hibernate.FetchMode
+import org.hibernate.Session
+import org.hibernate.criterion.Restrictions
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 import java.util.ArrayList
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
@@ -19,6 +23,29 @@ class ProdutoDao {
 
     fun getProduto(id: Int?): Produto {
         return em.find(Produto::class.java, id)
+    }
+
+    @Transactional
+    fun getProdutos2(nome: String, categoriaId: Int?, lojaId: Int?): List<Produto> {
+        val session = em.unwrap(Session::class.java)
+        val criteria = session.createCriteria(Produto::class.java)
+
+        if (!nome.isEmpty()) {
+            criteria.add(Restrictions.like("nome", "%$nome%"))
+        }
+
+        if (lojaId != null) {
+            criteria.add(Restrictions.like("loja.id", lojaId))
+        }
+
+        if (categoriaId != null) {
+            criteria.setFetchMode("categorias", FetchMode.JOIN)
+                    .createAlias("categorias", "c")
+                    .add(Restrictions.like("c.id", categoriaId))
+        }
+
+        return criteria.list() as List<Produto>
+
     }
 
     fun getProdutos(nome: String, categoriaId: Int?, lojaId: Int?): List<Produto> {

@@ -7,7 +7,7 @@ import javax.validation.Valid
 data class Produto(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Int = 0,
+        var id: Int? = null,
         var nome: String = "",
         var linkDaFoto: String = "",
         @Column(columnDefinition = "TEXT")
